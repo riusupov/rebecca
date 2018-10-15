@@ -1,4 +1,5 @@
 # rebecca
+```
 usage: ./verify [-h] [-v] [-p <netlist> <top module>] [-o]
                 [-c <netlist> <order> <labeling> <mode>]
                 [-i <netlist> <order> <labeling>]
@@ -18,4 +19,4 @@ optional arguments:
   -i <netlist> <order> <labeling>, --independence-check <netlist> <order> <labeling>
                         check if a netlist <netlist> is <order>-order
                         independent with the <labeling> as initial labeling
-
+```
