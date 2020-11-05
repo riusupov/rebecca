@@ -1,4 +1,4 @@
-#!/home/rieyu/projects/masking/bin/python3
+#!/usr/bin/env python3
 
 from argparse import ArgumentParser, FileType
 from helpers import *
