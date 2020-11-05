@@ -1,5 +1,26 @@
 # rebecca
+
+A tool for checking if a given netlist is side-channel analysis resistant.
+
+## Prerequisites
+
+### Python Dependencies
+
+Rebecca has a couple of Python dependencies. You can run
+```console
+$ pip install --user -r python_requirements.txt
 ```
+to install those dependencies.
+
+### Yosys
+
+Rebecca requires the [Yosys Open SYnthesis Suite](https://github.com/YosysHQ/yosys) to
+be installed.
+
+## Usage
+
+```console
+$ ./verify -h
 usage: ./verify [-h] [-v] [-p <netlist> <top module>] [-o]
                 [-c <netlist> <order> <labeling> <mode>]
                 [-i <netlist> <order> <labeling>]
