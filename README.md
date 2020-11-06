@@ -41,3 +41,40 @@ optional arguments:
                         check if a netlist <netlist> is <order>-order
                         independent with the <labeling> as initial labeling
 ```
+
+## Example
+
+The following steps illustrate how to use rebecca for verifying the DOM AND gate.
+
+1. In a first step, the netlist needs to be parsed using Yosys:
+```console
+$ ./verify.py --parse-verilog benchmarks/first_order/dom_and/dom_and.v dom_and
+```
+
+2. As a result, the verilog netlist is parsed into a .json file and a the labeling
+template is produced. Open the file `benchmarks/first_order/dom_and/dom_and.txt` and
+label the input nodes as follows:
+```
+ClkxCI_2: unimportant
+QxDO_10: unimportant
+QxDO_9: unimportant
+RstxBI_3: unimportant
+XxDI_4: share 1
+XxDI_5: share 1
+YxDI_6: share 2
+YxDI_7: share 2
+ZxDI_8: mask
+```
+
+3. Now, the following command can be used to perform the check of the netlist:
+```console
+$ ./verify.py --check benchmarks/first_order/dom_and/dom_and.json 1 benchmarks/first_order/dom_and/dom_and.txt s
+```
+4. As the DOM AND gate is first-order secure, this should produce the following output:
+```console
+(True, [])
+```
+
+## References
+
+- [Formal Verification of Masked Hardware Implementations in the Presence of Glitches](https://eprint.iacr.org/2017/897.pdf)
