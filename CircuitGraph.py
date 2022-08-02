@@ -163,23 +163,23 @@ class CircuitGraph(object):
 					self.__circuit['cells'][n] = {}
 					self.__circuit['cells'][n]['type'] = node_type
 					self.__graph.add_node(n)
-					self.__graph[n]['node_type'] = node_type
+					self.__graph.nodes()[n]['node_type'] = node_type
 				else:
 					logger.info('port add: skip node {}'.format(n))
 			elif node_type in ('and', 'xor', 'dff', 'dffsr'):
 				self.__circuit['cells'][n] = {}
 				self.__circuit['cells'][n]['type'] = node_type
 				self.__graph.add_node(n)
-				self.__graph[n]['node_type'] = node_type
+				self.__graph.nodes()[n]['node_type'] = node_type
 			elif node_type == 'or':
 				self.__circuit['cells'][n] = {}
 				self.__circuit['cells'][n]['type'] = 'and'
 				self.__graph.add_node(n)
-				self.__graph[n]['node_type'] = node_type
+				self.__graph.nodes()[n]['node_type'] = node_type
 			elif node_type == 'mux':
 				self.__circuit['cells'][n] = {}
 				self.__circuit['cells'][n]['type'] = 'mux'
-				self.__graph.add_node(n, node_type=node_type)
+				self.__graph.nodes()[n]['node_type'] = node_type
 			elif node_type == 'const':
 				pass
 			elif node_type == 'not':
@@ -200,8 +200,8 @@ class CircuitGraph(object):
 				self.__graph.add_edge(*e)
 
 		for n in self.__graph.nodes():
-			s = len(self.__graph.successors(n))
-			p = len(self.__graph.predecessors(n))
+			s = len(list(self.__graph.successors(n)))
+			p = len(list(self.__graph.predecessors(n)))
 			if s == 0 and p == 0:
 				logger.warn('Construct graph: node {} is not connected'.format(n))
 			t = self.__circuit['cells'][n]
@@ -221,21 +221,6 @@ class CircuitGraph(object):
 		dot += '}\n'
 		with open(fname if fname else 'tmp/graph.dot', 'w') as filename:
 			filename.write(dot)
-
-	def get_all_predecessors(self, node):
-		predecessors = []
-		for p in self.__graph.predecessors(node):
-			predecessors.append(p)
-			predecessors += self.get_all_predecessors(p)
-		return set(predecessors)
-
-	def get_all_successors(self, node):
-		successors = []
-		for p in self.__graph.successors(node):
-			if p != 'node_type':
-				successors.append(p)
-				successors += self.get_all_successors(p)
-		return set(successors)
 
 	def get_graph(self):
 		return self.__graph
