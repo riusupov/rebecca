@@ -3,3 +3,6 @@
 
 # Temporary files
 tmp/**
+
+# Cell libraries
+cell_libraries/**

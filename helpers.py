@@ -1,6 +1,6 @@
 from itertools import combinations, permutations
 from mako.template import Template
-from os import system
+from os import system, listdir, path
 from json import dumps, load
 
 def is_int(s):
@@ -134,10 +134,14 @@ def generate_optimized_labeling(filename):
 		tmp = {** ordinary_labels}
 	return labels
 
-def parse_verilog(verilog_files, top_module, template_file='template/yosys.txt'):
+def parse_verilog(verilog_files, top_module, library=None, template_file='template/yosys.txt'):
 	template = Template(filename=template_file)
 	basename = ''.join(verilog_files.split('.')[:-1])
 	files = verilog_files if type(verilog_files) == list else [verilog_files]
+	if (library):
+		for lib in listdir(library):
+			if lib.endswith(".v"):
+				files.append(path.join(library, lib))
 	yosys_script = template.render(input_files=files, top_module=top_module)
 	with open('tmp/synth.ys', 'w') as filename:
 		filename.write(yosys_script)
