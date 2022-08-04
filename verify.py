@@ -40,6 +40,9 @@ if __name__ == '__main__':
 	parser.add_argument('-p', '--parse-verilog', nargs=2,
 		metavar=('<netlist>', '<top module>'),
 		help='parse verilog file and generate labeling template')
+	parser.add_argument('-l', '--library', nargs=1,
+		metavar=('<library dir>'),
+		help='use verilog cell libraries located in library dir')
 	parser.add_argument('-o', '--optimized', action='store_true',
 		help='run verification in parallel')
 	parser.add_argument('-c', '--check', nargs=4, metavar=('<netlist>', '<order>', '<labeling>', '<mode>'),
@@ -48,7 +51,10 @@ if __name__ == '__main__':
 		help='check if a netlist <netlist> is <order>-order independent with the <labeling> as initial labeling')
 	args = vars(parser.parse_args())
 	if args['parse_verilog']:
-		parse_verilog(args['parse_verilog'][0], args['parse_verilog'][1])
+		if args['library']:
+			parse_verilog(args['parse_verilog'][0], args['parse_verilog'][1], args['library'][0])
+		else:	
+			parse_verilog(args['parse_verilog'][0], args['parse_verilog'][1])
 	if args['independence_check']:
 		shares = get_shares(args['independence_check'][2])
 		labels = generate_labeling(args['independence_check'][2])[0]
