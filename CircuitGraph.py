@@ -152,7 +152,7 @@ class CircuitGraph(object):
 				self.__redundant_circuit['wires'][w]['from'],
 				self.__redundant_circuit['wires'][w]['to'])
 
-		isolated_nodes = nx.isolates(self.__redundant_graph)
+		isolated_nodes = list(nx.isolates(self.__redundant_graph))
 		logger.warn('remove isolates: {}'.format(isolated_nodes))
 		self.__redundant_graph.remove_nodes_from(isolated_nodes)
 
