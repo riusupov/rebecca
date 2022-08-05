@@ -134,7 +134,7 @@ def generate_optimized_labeling(filename):
 		tmp = {** ordinary_labels}
 	return labels
 
-def parse_verilog(verilog_files, top_module, library=None, template_file='template/yosys.txt'):
+def parse_verilog(verilog_files, top_module, library=None, template_file=path.expanduser('~/repos/rebecca/template/yosys.txt')):
 	template = Template(filename=template_file)
 	basename = ''.join(verilog_files.split('.')[:-1])
 	files = verilog_files if type(verilog_files) == list else [verilog_files]
